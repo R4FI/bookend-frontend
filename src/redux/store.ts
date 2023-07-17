@@ -5,10 +5,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./api/apiSlice";
 import bookSlice from "./features/books/bookSlice";
+import userSlice from "./features/user/userSlice";
 
 const store = configureStore({
   reducer: {
     book: bookSlice,
+    user: userSlice,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

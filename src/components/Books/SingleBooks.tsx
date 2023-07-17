@@ -3,10 +3,14 @@
 import { useParams } from "react-router-dom";
 import { useSingleBookQuery } from "../../redux/api/productapislice";
 import Reviews from "../Reviews/Reviews";
+import MoadlButton from "../Button/ModalButton";
 
 const SingleBooks = () => {
   const { id } = useParams();
   const { data: data } = useSingleBookQuery(id);
+  const userEmail = localStorage.getItem("userEmail");
+  const isUserBookCreator = data?.data.userEmail === userEmail;
+  console.log(isUserBookCreator);
 
   if (!data) {
     return (
@@ -30,7 +34,9 @@ const SingleBooks = () => {
         />
         <div className="p-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3"></div>
+            <div className="flex items-center space-x-3">
+              {isUserBookCreator ? <MoadlButton book={data} /> : ""}
+            </div>
             <button
               type="button"
               title="Bookmark post"

@@ -4,29 +4,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface IBook {
-  status: boolean;
-  priceRange: number;
+export type IBooks = {
+  id?: string | null;
+  title: string | null;
+  author: string | null;
+  genre: string | null;
+  publicationDate: string | null;
+  userEmail?: string | null;
+};
+interface BookState {
+  books: IBooks[];
 }
 
-const initialState: IBook = {
-  status: false,
-  priceRange: 150,
+const initialState: BookState = {
+  books: [],
 };
 
 const bookSlice = createSlice({
   name: "book",
   initialState,
   reducers: {
-    toggleState: (state) => {
-      state.status = !state.status;
-    },
-    setPriceRange: (state, action: PayloadAction<number>) => {
-      state.priceRange = action.payload;
+    addBook: (state, action: PayloadAction<IBooks>) => {
+      state.books.push(action.payload);
     },
   },
 });
 
-export const { toggleState, setPriceRange } = bookSlice.actions;
+export const { addBook } = bookSlice.actions;
 
 export default bookSlice.reducer;

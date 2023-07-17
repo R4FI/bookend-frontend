@@ -1,0 +1,30 @@
+.bookInput {
+  background-color: rgb(243, 166, 98);
+  margin: auto;
+  width: 390px;
+  margin-top: 45px;
+  border: 1px black solid;
+  border-radius: 15px;
+}
+.bookInput input {
+  border: 2px solid black;
+  margin-top: 5px;
+  outline: none;
+  padding: 5px;
+  width: 280px;
+  border-radius: 25px;
+}
+.addbookbtn {
+  width: 78px;
+  background-color: rgb(0, 0, 0);
+  padding: 5px;
+  margin-top: 15px;
+  color: white;
+}
+
+.userinfo {
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  padding: 8px;
+  border-radius: 25px;
+}

@@ -3,56 +3,41 @@
 /* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
+
 import { useDispatch } from "react-redux";
-import { createUser } from "../../../redux/features/user/userSlice";
+import { loginUser } from "../../../redux/features/user/userSlice";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const Register = () => {
-  const [name, setName] = useState("");
+import { useNavigate } from "react-router-dom";
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   interface SignupFormInputs {
-    name: string;
     email: string;
     password: string;
   }
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleCreateUser = (data: SignupFormInputs) => {
     console.log(data);
     const formData: SignupFormInputs = {
-      name,
       email,
       password,
     };
-    dispatch(createUser(formData) as any);
+    dispatch(loginUser(formData) as any);
+    navigate("/");
   };
   return (
     <div className="mt-10">
       <div className="m-auto flex flex-col max-w-md p-6 rounded-md sm:p-10 dark:bg-gray-900 dark:text-gray-100">
         <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-          <p className="text-sm dark:text-gray-400">
-            Sign up to create your account
-          </p>
+          <h1 className="my-3 text-4xl font-bold">Sign In</h1>
+          <p className="text-sm dark:text-gray-400">Sign in to get back</p>
         </div>
         <form action="" className="space-y-12">
           <div className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block mb-2 text-sm">
-                Name
-              </label>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                name="name"
-                id="name"
-                placeholder="leroy@jenkins.com"
-                className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
-              />
-            </div>
             <div>
               <label htmlFor="email" className="block mb-2 text-sm">
                 Email address
@@ -96,19 +81,9 @@ const Register = () => {
                 type="button"
                 className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900"
               >
-                Sign Up
+                Sign In
               </button>
             </div>
-            <p className="px-6 text-sm text-center dark:text-gray-400">
-              Already have an account?
-              <a
-                rel="noopener noreferrer"
-                href="/signin"
-                className="hover:underline dark:text-violet-400"
-              >
-                Sign In
-              </a>
-            </p>
           </div>
         </form>
       </div>
@@ -117,4 +92,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
