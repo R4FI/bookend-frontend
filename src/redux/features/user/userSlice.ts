@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -104,7 +105,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setUser: (state, action: PayloadAction<string | null>) => {
+    setUser: (state, _action: PayloadAction<string | null>) => {
       state.user.email;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {

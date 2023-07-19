@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/await-thenable */
@@ -20,8 +21,7 @@ const Login = () => {
   }
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleCreateUser = (data: SignupFormInputs) => {
-    console.log(data);
+  const handleCreateUser = () => {
     const formData: SignupFormInputs = {
       email,
       password,

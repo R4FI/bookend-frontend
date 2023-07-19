@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/await-thenable */
@@ -20,8 +21,7 @@ const Register = () => {
     password: string;
   }
   const dispatch = useDispatch();
-  const handleCreateUser = (data: SignupFormInputs) => {
-    console.log(data);
+  const handleCreateUser = () => {
     const formData: SignupFormInputs = {
       name,
       email,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -10,25 +11,10 @@ import BooksCard from "./BooksCard";
 
 const AllBooks = () => {
   const { data } = useGetBooksQuery(undefined);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [input, setInput] = useState("");
-  // Filter the books based on the search query, genre, and year
-  const filteredBooks = data?.data?.filter((book: IBook) => {
-    const titleMatch = book.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const authorMatch = book.author
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const genreMatch = selectedGenre ? book.genre === selectedGenre : true;
-    const yearMatch = selectedYear
-      ? book.PublicationDate.includes(selectedYear)
-      : true;
 
-    return titleMatch || authorMatch || genreMatch || yearMatch;
-  });
   return (
     <div>
       <div className="text-2xl font-extrabold text-center mt-10">
@@ -71,7 +57,7 @@ const AllBooks = () => {
 
       <div className="mx-auto col-span-9 grid xs:grid-cols-3 gap-10 pb-5 xl:grid-cols-3">
         {data?.data
-          ?.filter((val) => {
+          ?.filter((val: { title: { toString: () => string } }) => {
             if (input == "") {
               return val;
             } else if (

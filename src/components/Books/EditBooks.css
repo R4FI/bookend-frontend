@@ -1,0 +1,15 @@
+.formbtn {
+  background-color: black;
+}
+
+.fieldinput {
+  border: 2px solid black !important;
+  padding: 5px;
+  outline: 1px solid black;
+  border-radius: 15px;
+}
+.formbg {
+  background: wheat;
+  padding: 35px;
+  width: 320px;
+}

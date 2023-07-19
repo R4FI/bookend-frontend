@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { IBook } from "../../types/globalTypes";
 import EditButton from "../Button/EditButton";
 import DeleteButton from "../Button/DeleteButton";
-import { useDispatch } from "react-redux";
 
 interface IProps {
   book: IBook;

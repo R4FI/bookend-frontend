@@ -8,7 +8,7 @@ export const api = createApi({
     baseUrl: "https://bookbackend-77zi8soyy-r4fi.vercel.app/api/v1",
   }),
   tagTypes: ["review"],
-  endpoints: (builder) => ({}),
+  endpoints: (_builder) => ({}),
 });
 
 export default api;

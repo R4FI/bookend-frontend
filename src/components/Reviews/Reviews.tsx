@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
 import {
   useGetReviewQuery,
   usePostReviewMutation,
 } from "../../redux/api/productapislice";
 import "./Review.css";
 interface IProps {
-  id: string;
+  id: string | undefined;
 }
 
 const Reviews = ({ id }: IProps) => {
@@ -19,8 +21,9 @@ const Reviews = ({ id }: IProps) => {
     pollingInterval: 30000,
   });
   const [postReview, options] = usePostReviewMutation();
+  console.log(options);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const option = {
       id: id,
@@ -29,7 +32,7 @@ const Reviews = ({ id }: IProps) => {
     postReview(option);
     setInputValue("");
   };
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (event: any) => {
     setInputValue(event.target.value);
   };
   return (

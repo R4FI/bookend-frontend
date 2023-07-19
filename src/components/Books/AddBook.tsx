@@ -6,7 +6,7 @@ import "./AddBook.css";
 import { getToken } from "../../redux/features/user/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { usePostBookMutation } from "../../redux/api/productapislice";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
   const [title, setTitle] = useState("");
@@ -14,12 +14,17 @@ const AddBook = () => {
   const [genre, setGenre] = useState("");
   const [PublicationDate, setPublicationDate] = useState("");
   const [img, setImg] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
   const [postBook, options] = usePostBookMutation();
   console.log(options);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!title || !author || !genre || !PublicationDate) {
+      toast.error("Please fill all the required fields");
+      return;
+    }
+
     const data = {
       title,
       author,
@@ -30,14 +35,17 @@ const AddBook = () => {
     };
     const response = await postBook(data);
     console.log(response);
-    toast.success("Book created successfully");
-    navigate("/all-books");
-    // Clear form fields
-    setTitle("");
-    setAuthor("");
-    setGenre("");
-    setPublicationDate("");
-    setImg("");
+    toast.success("Books Updated Sucessfully");
+    if (response) {
+      // Clear form fields
+      setTitle("");
+      setAuthor("");
+      setGenre("");
+      setPublicationDate("");
+      setImg("");
+    } else {
+      toast.error("Failed to update");
+    }
   };
 
   return (
@@ -46,9 +54,10 @@ const AddBook = () => {
         <div className="userinfo">User: {getToken() ? userEmail : ""}</div>
         <form onSubmit={handleSubmit}>
           <div className="mt-5">
-            <label>Title:</label>
+            <label>Title *:</label>
             <br />
             <input
+              required
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -59,24 +68,27 @@ const AddBook = () => {
             <input value={img} onChange={(e) => setImg(e.target.value)} />
           </div>
           <div>
-            <label>Author:</label> <br />
+            <label>Author *:</label> <br />
             <input
+              required
               type="text"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
             />
           </div>
           <div>
-            <label>Genre:</label> <br />
+            <label>Genre *:</label> <br />
             <input
+              required
               type="text"
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
             />
           </div>
           <div>
-            <label>Publication Date:</label> <br />
+            <label>Publication Date *:</label> <br />
             <input
+              required
               type="text"
               value={PublicationDate}
               onChange={(e) => setPublicationDate(e.target.value)}

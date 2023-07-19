@@ -12,7 +12,7 @@ import {
   useUpdateBookMutation,
 } from "../../redux/api/productapislice";
 import { useState } from "react";
-
+import "./EditBooks.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 const EditBook = () => {
@@ -30,6 +30,10 @@ const EditBook = () => {
 
   const updateHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!title || !author || !genre || !PublicationDate) {
+      toast.error("Please fill all the required fields");
+      return;
+    }
     if (isUserBookCreator) {
       const formData = {
         title,
@@ -39,8 +43,10 @@ const EditBook = () => {
         img,
       };
       const response = await updateBook({ id: id, data: formData });
-      toast.success("Book Updated Successfuly");
-      console.log(response);
+      if (response) {
+        toast.success("Book Updated Successfuly");
+        console.log(response);
+      }
     } else {
       toast.error("You are not the author");
     }
@@ -57,43 +63,47 @@ const EditBook = () => {
         </span>
       </h1>
       <div className="flex flex-col w-72 gap-7 m-auto">
-        <form onSubmit={updateHandler}>
+        <form onSubmit={updateHandler} className="formbg">
+          <label>Title</label>
           <Input
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="xl:w-15 "
+            className="xl:w-15 fieldinput"
             variant="outlined"
-            label="Title"
           />
+          <label>Author</label>
           <Input
+            required
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="xl:w-15 "
+            className="xl:w-15 fieldinput"
             variant="outlined"
-            label="Author"
           />
+          <label>Genre</label>
           <Input
+            required
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-            className="xl:w-15"
+            className="xl:w-15 fieldinput"
             variant="outlined"
-            label="Genre"
           />
+          <label>Publication Date</label>
           <Input
+            required
             value={PublicationDate}
             onChange={(e) => setPublicationDate(e.target.value)}
-            className="xl:w-15"
+            className="xl:w-15 fieldinput"
             variant="outlined"
-            label="Publication Date"
           />
+          <label>Image</label>
           <Input
             onChange={(e) => setImg(e.target.value)}
             value={img}
-            className="xl:w-15"
+            className="xl:w-15 fieldinput"
             variant="outlined"
-            label="Image"
           />
-          <Button color="green" className="mt-5" type="submit">
+          <Button color="green" className="mt-5 formbtn" type="submit">
             Update
           </Button>
         </form>
