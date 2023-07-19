@@ -1,2 +1,2 @@
 # bookend-frontend
-after login if the sinout button or add not apeard please perform a reload.
+after login if the signout button or add not apeared please perform a reload.
