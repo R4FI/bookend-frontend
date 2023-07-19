@@ -49,7 +49,7 @@ export const createUser = createAsyncThunk(
   async ({ email, password, name }: ICredential) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/users/create-user",
+        "https://bookbackend-77zi8soyy-r4fi.vercel.app/api/v1/users/create-user",
         { email, password, name }
       );
       const successMessage = response.data.message;
@@ -68,7 +68,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }: ILogInCredential) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        "https://bookbackend-77zi8soyy-r4fi.vercel.app/api/v1/auth/login",
         { email, password }
       );
       const accessToken = response.data.data.accessToken;
@@ -89,6 +89,8 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+//
+
 export const getToken = () => {
   return localStorage.getItem("accessToken");
 };

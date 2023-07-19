@@ -27,9 +27,19 @@ const bookSlice = createSlice({
     addBook: (state, action: PayloadAction<IBooks>) => {
       state.books.push(action.payload);
     },
+    updateBook: (state, action: PayloadAction<IBooks>) => {
+      const { id, title, author, genre, publicationDate } = action.payload;
+      const existingBook = state.books.find((book) => book.id === id);
+      if (existingBook) {
+        existingBook.title = title;
+        existingBook.author = author;
+        existingBook.genre = genre;
+        existingBook.publicationDate = publicationDate;
+      }
+    },
   },
 });
 
-export const { addBook } = bookSlice.actions;
+export const { addBook, updateBook } = bookSlice.actions;
 
 export default bookSlice.reducer;

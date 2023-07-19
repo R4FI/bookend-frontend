@@ -1,5 +1,4 @@
 import Banner from "../Banner/Bnner";
-import BooksCard from "../Books/BooksCard";
 import HomeBooks from "../Books/HomeBooks";
 import Footer from "../Footer/Footer";
 

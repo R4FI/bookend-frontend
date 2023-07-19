@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -30,11 +31,17 @@ const bookApi = api.injectEndpoints({
         body: data,
       }),
     }),
-    editBook: builder.mutation({
-      query: ({ id, data }) => ({
+    updateBook: builder.mutation({
+      query: ({ id, ...formData }) => ({
         url: `/book/${id}`,
         method: "PUT",
-        body: data,
+        body: { ...formData },
+      }),
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/book/${id}`,
+        method: "DELETE",
       }),
     }),
   }),
@@ -46,5 +53,6 @@ export const {
   usePostReviewMutation,
   useGetReviewQuery,
   usePostBookMutation,
-  useEditBookMutation,
+  useUpdateBookMutation,
+  useDeleteBookMutation,
 } = bookApi;

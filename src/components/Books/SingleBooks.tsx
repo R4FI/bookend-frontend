@@ -1,17 +1,47 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useParams } from "react-router-dom";
-import { useSingleBookQuery } from "../../redux/api/productapislice";
+import { Link, useParams } from "react-router-dom";
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+  useSingleBookQuery,
+} from "../../redux/api/productapislice";
 import Reviews from "../Reviews/Reviews";
-import MoadlButton from "../Button/ModalButton";
-
+import EditButton from "../Button/EditButton";
+import DeleteButton from "../Button/DeleteButton";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { useEffect } from "react";
 const SingleBooks = () => {
   const { id } = useParams();
   const { data: data } = useSingleBookQuery(id);
   const userEmail = localStorage.getItem("userEmail");
+  const navigate = useNavigate();
+  const { refetch } = useGetBooksQuery(undefined);
+  const [isBookDeleted, setIsBookDeleted] = useState(false);
   const isUserBookCreator = data?.data.userEmail === userEmail;
   console.log(isUserBookCreator);
-
+  const [deleteBook, option] = useDeleteBookMutation();
+  const handleDelete = async () => {
+    if (isUserBookCreator) {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this book?"
+      );
+      if (confirmed) {
+        await deleteBook(id);
+        toast.success("Book Deleted Successfully");
+        setIsBookDeleted(true);
+        navigate("/all-books");
+      }
+    }
+  };
+  useEffect(() => {
+    if (option.isSuccess) {
+      void refetch();
+    }
+  }, [option.isSuccess, refetch]);
   if (!data) {
     return (
       <div>
@@ -22,6 +52,9 @@ const SingleBooks = () => {
         </div>
       </div>
     );
+    if (isBookDeleted) {
+      return <div>Book has been deleted successfully.</div>;
+    }
   }
   return (
     <div>
@@ -35,7 +68,14 @@ const SingleBooks = () => {
         <div className="p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              {isUserBookCreator ? <MoadlButton book={data} /> : ""}
+              <Link to={`/book/${id}`}>
+                {" "}
+                {isUserBookCreator && <EditButton />}
+              </Link>
+              <button onClick={handleDelete}>
+                {" "}
+                {isUserBookCreator && <DeleteButton />}
+              </button>
             </div>
             <button
               type="button"
@@ -62,6 +102,7 @@ const SingleBooks = () => {
         </div>
       </div>
       <Reviews id={id} />
+      <ToastContainer />
     </div>
   );
 };

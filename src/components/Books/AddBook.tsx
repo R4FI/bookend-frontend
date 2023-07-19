@@ -4,8 +4,9 @@
 import { useState } from "react";
 import "./AddBook.css";
 import { getToken } from "../../redux/features/user/userSlice";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { usePostBookMutation } from "../../redux/api/productapislice";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
   const [title, setTitle] = useState("");
@@ -13,6 +14,7 @@ const AddBook = () => {
   const [genre, setGenre] = useState("");
   const [PublicationDate, setPublicationDate] = useState("");
   const [img, setImg] = useState("");
+  const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
   const [postBook, options] = usePostBookMutation();
   console.log(options);
@@ -29,6 +31,7 @@ const AddBook = () => {
     const response = await postBook(data);
     console.log(response);
     toast.success("Book created successfully");
+    navigate("/all-books");
     // Clear form fields
     setTitle("");
     setAuthor("");
@@ -83,6 +86,7 @@ const AddBook = () => {
             Create
           </button>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

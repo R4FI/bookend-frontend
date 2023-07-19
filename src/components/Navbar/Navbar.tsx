@@ -5,8 +5,9 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
 import { getToken, handleLogout } from "../../redux/features/user/userSlice";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -19,6 +20,11 @@ function classNames(...classes: string[]) {
 export default function Navbar() {
   // const userEmail = useSelector((state) => state.user.userEmail);
   const userEmail = localStorage.getItem("userEmail");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
+
+  useEffect(() => {
+    setIsLoggedIn(!!getToken());
+  }, []);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -107,7 +113,7 @@ export default function Navbar() {
                           </a>
                         )}
                       </Menu.Item>
-                      {getToken() && (
+                      {isLoggedIn && (
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -122,7 +128,7 @@ export default function Navbar() {
                           )}
                         </Menu.Item>
                       )}
-                      {getToken() ? (
+                      {isLoggedIn && (
                         <Menu.Item>
                           {({ active }) => (
                             <button
@@ -136,7 +142,8 @@ export default function Navbar() {
                             </button>
                           )}
                         </Menu.Item>
-                      ) : (
+                      )}
+                      {!isLoggedIn && (
                         <Menu.Item>
                           {({ active }) => (
                             <a

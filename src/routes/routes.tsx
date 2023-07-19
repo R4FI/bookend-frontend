@@ -9,7 +9,7 @@ import SingleBooks from "../components/Books/SingleBooks";
 import Login from "../components/user/Login/Login";
 import AddBook from "../components/Books/AddBook";
 import PrivateRoute from "./PrivateRoute";
-import MoadlButton from "../components/Button/ModalButton";
+import EditBook from "../components/Books/EditBook";
 
 const routes = createBrowserRouter([
   {
@@ -38,9 +38,14 @@ const routes = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/edit-book/:id",
-        element: <MoadlButton book={AllBooks} />,
+        path: "/book/:id",
+        element: (
+          <PrivateRoute>
+            <EditBook />
+          </PrivateRoute>
+        ),
       },
+
       {
         path: "/add-book",
         element: (
